@@ -1,36 +1,37 @@
-## Docker CE Install
+# Linux
+<pre>
+To check current values using these commands:
 
-```sh
-sudo amazon-linux-extras install docker
-sudo service docker start
-sudo usermod -a -G docker ec2-user
-```
+sudo cat /proc/sys/vm/swappiness
+sudo cat /proc/sys/vm/vfs_cache_pressure
+To enable these settings without rebooting use the following commands:
 
-Make docker auto-start
+sudo sysctl -w vm.swappiness=10
+sudo sysctl -w vm.vfs_cache_pressure=200
+ 
+</pre>
+## How To Add Swap on Amazon Linux EC2
+<pre>
+Of course, on low-memory instances swap is wise. To add a 1GB swap file for example, from command line you’ll type:
 
-`sudo chkconfig docker on`
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+Now setup the swap file with the command:
 
-Because you always need it....
+sudo mkswap /swapfile
+sudo chmod 600 /swapfile
+Now enable the swap:
 
-`sudo yum install -y git`
+sudo swapon /swapfile
+If you use the top command, you should now see the 1gb swap added. So now lets make swap persistent so it’s not
+dropped when you reboot. Edit /etc/fstab file and add this line as the last line:
 
-Reboot to verify it all loads fine on its own.
+/swapfile swap swap defaults 0 0
 
-`sudo reboot`
+When you reboot, use the free -h or df -h command to check for swap.
 
-## docker-compose install
+Remember, adding swap can help save your server from running out of memory but if it’s already using a big chunk 
+of swap (aka swapping), that is never good for performance. A lot can be expanded upon with regards to swap and paging/swapping. However, the point today is that stripping/tuning the AMI.
 
-Copy the appropriate `docker-compose` binary from GitHub:
-
-`sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose`
-
-NOTE: to get the latest version (thanks @spodnet):
-`sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose`
-
-Fix permissions after download: 
-
-`sudo chmod +x /usr/local/bin/docker-compose`
-
-Verify success: 
-
-`docker-compose version`
+Note: this article was originally published on Nov 21, 2013. It has been updated to ensure that the suggested changes
+are still compatible
+</pre>
