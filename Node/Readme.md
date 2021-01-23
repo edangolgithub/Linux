@@ -20,3 +20,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ```
+### if unble towatch large files
+```
+echo fs.inotify.max_user_watches = 524288 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
