@@ -7,6 +7,12 @@ dotnet tool install -g Amazon.Lambda.Tools
 dotnet tool install --global Amazon.Lambda.TestTool-5.0
 dotnet new -i "Amazon.Lambda.Templates::*"
 ```
+
+### ef migration
+```
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
 # AWS Extensions for .NET CLI
 
 This repository contains AWS tool extensions to the .NET CLI. These tool extensions are focused on building 
