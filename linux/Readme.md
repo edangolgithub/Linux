@@ -32,6 +32,18 @@ When you reboot, use the free -h or df -h command to check for swap.
 Remember, adding swap can help save your server from running out of memory but if it’s already using a big chunk 
 of swap (aka swapping), that is never good for performance. A lot can be expanded upon with regards to swap and paging/swapping. However, the point today is that stripping/tuning the AMI.
 
+### new swap
+```
+sudo install -o root -g root -m 0600 /dev/null /swapfile
+sudo dd if=/dev/zero of=/swapfile bs=1k count=2048k
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo echo "/swapfile       swap    swap    auto      0       0" | tee -a /etc/fstab
+sudo sysctl -w vm.swappiness=10
+echo vm.swappiness = 10 | tee -a /etc/sysctl.conf
+
+```
+
 Note: this article was originally published on Nov 21, 2013. It has been updated to ensure that the suggested changes
 are still compatible
 </pre>
