@@ -8,6 +8,14 @@ sudo swapon /swapfile Enable the swap
 echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab Persist swapfile over reboots 
 ```
 
+```
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
+```
+
 
 <pre>
 To check current values using these commands:
