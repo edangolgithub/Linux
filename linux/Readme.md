@@ -68,4 +68,5 @@ are still compatible
 ## size of folder
 ```
 sudo du -sh /var
+sudo du -sh /*
 ```
