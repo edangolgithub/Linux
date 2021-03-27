@@ -65,3 +65,7 @@ echo vm.swappiness = 10 | tee -a /etc/sysctl.conf
 Note: this article was originally published on Nov 21, 2013. It has been updated to ensure that the suggested changes
 are still compatible
 </pre>
+## size of folder
+```
+sudo du -sh /var
+```
